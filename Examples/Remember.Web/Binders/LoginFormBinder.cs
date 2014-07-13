@@ -9,9 +9,9 @@ namespace Remember.Web.Binders
     [ModelBinderType(typeof(LoginForm))]
     public class LoginFormBinder: IModelBinder
     {
-        private readonly IAuthenticationService _authService;
+        private readonly ICaptchaService _authService;
 
-        public LoginFormBinder(IAuthenticationService authService)
+        public LoginFormBinder(ICaptchaService authService)
         {
             _authService = authService;
         }
@@ -28,13 +28,13 @@ namespace Remember.Web.Binders
 
                 model.EmailAddress = bindingContext.ValueProvider.GetValue("Email").AttemptedValue;
                 model.Password = bindingContext.ValueProvider.GetValue("Password").AttemptedValue;
-
+                model.Captcha = bindingContext.ValueProvider.GetValue("Captcha").AttemptedValue;
 
                 // validate
 
-                if (!_authService.IsValid(model.EmailAddress,model.Password ))
+                if (!_authService.IsValid(model.Captcha))
                 {
-                    bindingContext.ModelState.AddModelError("", "Invalid credentials (so says the injected LoginFormBinder)");
+                    bindingContext.ModelState.AddModelError("", "Invalid captcha (so says the injected LoginFormBinder)");
                 }
             }
             catch (Exception ex)

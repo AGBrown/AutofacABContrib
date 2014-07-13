@@ -46,8 +46,8 @@
     <Compile Include="..\..\Core\Source\Autofac\Properties\VersionAssemblyInfo.cs">
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AuthenticationService.cs" />
-    <Compile Include="IAuthenticationService.cs" />
+    <Compile Include="CaptchaService.cs" />
+    <Compile Include="ICaptchaService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

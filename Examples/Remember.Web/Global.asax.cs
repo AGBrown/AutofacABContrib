@@ -46,7 +46,7 @@ namespace Remember.Web
             builder.RegisterModelBinders(Assembly.GetExecutingAssembly());
             builder.RegisterModelBinderProvider();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
+            builder.RegisterType<CaptchaService>().As<ICaptchaService>();
             builder.RegisterModule<AutofacWebTypesModule>();
             builder.RegisterFilterProvider();
 

@@ -17,12 +17,17 @@
 
       <div>
       <label for="Email">Email</label>
-      <input type="text" name="Email" value="Enter email here" />
+      <input type="text" name="Email" value="test@test.com" />
       </div>
 
       <div>
       <label for="Password">Password</label>
-      <input type="password" name="Password" value="" />
+      <input type="password" name="Password" value="test" />
+      </div>
+
+      <div>
+      <label for="Captcha">Captcha: what is 2+2 (hint: it's not 5)</label>
+      <input type="text" name="Captcha" value="4" />
       </div>
 
       <div>

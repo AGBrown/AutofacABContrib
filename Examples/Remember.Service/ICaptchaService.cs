@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Remember.Service
 {
-    public interface IAuthenticationService
+    public interface ICaptchaService
     {
-        bool IsValid(string emailAddress, string password);
+        bool IsValid(string captcha);
     }
 }

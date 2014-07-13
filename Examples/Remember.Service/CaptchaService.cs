@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Remember.Service
 {
-    public class AuthenticationService:IAuthenticationService
+    public class CaptchaService:ICaptchaService
     {
 
 
-        public bool IsValid(string emailAddress, string password)
+        public bool IsValid(string captcha)
         {
-            if (emailAddress == "test@test.com" && password == "test")
+            if (captcha == "4")
             {
                 return true;
             }
