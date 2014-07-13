@@ -28,7 +28,7 @@ namespace Remember.MvcWeb.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl, ILogger logger)
+        public ActionResult Login(string returnUrl)//, ILogger logger)
         {
             ViewBag.ReturnUrl = returnUrl;
             var model = new LoginViewModel
@@ -36,10 +36,10 @@ namespace Remember.MvcWeb.Controllers
                 Email = "test@test.com",
                 Password = "Test123?"
             };
-            if(logger == null)
-                ModelState.AddModelError("", "Error: logger was NOT injected by action invoker");
-            else
-                ViewBag.Message = "<span style='color:green;'>Success: logger was injected by action invoker</span>";
+            //if(logger == null)
+            //    ModelState.AddModelError("", "Error: logger was NOT injected by action invoker");
+            //else
+            //    ViewBag.Message = "<span style='color:green;'>Success: logger was injected by action invoker</span>";
 
             return View(model);
         }

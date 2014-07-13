@@ -42,15 +42,15 @@ namespace Remember.MvcWeb
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterModule<AutofacWebTypesModule>();
             //  Remove this to remove #553
-            //builder.RegisterFilterProvider();
+            builder.RegisterFilterProvider();
 
             //builder.RegisterModule<NHibernateModule>();
 
             // Change controller action parameter injection by changing web.config.
             //  Remove this to remove #544 (and update the Login action to remove the injected ILogger)
-            builder.RegisterType<ExtensibleActionInvoker>()
-                   .As<IActionInvoker>()
-                   .InstancePerRequest();
+            //builder.RegisterType<ExtensibleActionInvoker>()
+            //       .As<IActionInvoker>()
+            //       .InstancePerRequest();
 
             // MVC integration test items
             //builder.RegisterType<InvokerDependency>().As<IInvokerDependency>();
