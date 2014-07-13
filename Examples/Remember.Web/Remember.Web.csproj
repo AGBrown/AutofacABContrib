@@ -196,6 +196,10 @@
       <Project>{C02A73FD-8F99-4127-878F-01F929C67BAD}</Project>
       <Name>Remember.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Remember.Web.Service\Remember.Web.Service.csproj">
+      <Project>{49e3c045-81b3-4cd0-9f18-57c158538e28}</Project>
+      <Name>Remember.Web.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Api\Models\" />

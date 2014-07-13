@@ -6,6 +6,7 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Extras.DomainServices;
 using Autofac.Integration.Mvc;
+using Glimpse.Core.Extensibility;
 using Remember.Persistence.NHibernate;
 using Remember.Service;
 using Remember.Web.Areas.Integration.Models;
@@ -38,11 +39,17 @@ namespace Remember.Web
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterType<Remember.Web.Service.FakeLogger>()
+                   .As<Remember.Web.Service.ILogger>()
+                   .InstancePerRequest();
+
             builder.RegisterModelBinders(Assembly.GetExecutingAssembly());
             builder.RegisterModelBinderProvider();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
             builder.RegisterModule<AutofacWebTypesModule>();
+            builder.RegisterFilterProvider();
+
             builder.RegisterModule<NHibernateModule>();
 
             // Change controller action parameter injection by changing web.config.
@@ -62,4 +69,5 @@ namespace Remember.Web
             RegisterRoutes(RouteTable.Routes);
         }
     }
+
 }

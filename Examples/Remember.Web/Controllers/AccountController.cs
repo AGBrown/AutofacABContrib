@@ -5,7 +5,7 @@ using Remember.Web.Service;
 
 namespace Remember.Web.Controllers
 {
-    [Authorize]
+    [CustomAuthorize]
     public class AccountController : Controller
     {
         [AllowAnonymous]
