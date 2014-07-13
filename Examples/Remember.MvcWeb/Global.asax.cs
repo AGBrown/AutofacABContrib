@@ -14,25 +14,6 @@ namespace Remember.MvcWeb
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        static void RegisterRoutes(RouteCollection routes)
-        {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            routes.IgnoreRoute("favicon.ico");
-
-            AreaRegistration.RegisterAllAreas();
-
-            routes.MapRoute(
-                "Default",                              // Route Name
-                "{controller}/{action}/{id}",           // Route URL (pattern)
-                new
-                {                                   // Route Detauls
-                    controller = "Home",
-                    action = "Index",
-                    id = UrlParameter.Optional
-                },
-                new[] { "Remember.Web.Controllers" }      // Route Namespaces that take preference
-            );
-        }
         protected void Application_Start()
         {
             var builder = new ContainerBuilder();
