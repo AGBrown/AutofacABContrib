@@ -20,7 +20,7 @@ namespace Remember.Web.Service
         {
             //  this will fail if the Logger is null (i.e. property injection fails)
             Logger.Log("AuthorizeCore");
-            httpContext.Response.Write("<div style='color:white;background-color:black'>CustomAuthorize - Logger was injectd</div>");
+            httpContext.Response.Write("<div style='color:black;background-color:orange;z-index:1000;height:50px;padding-top:20px;'>CustomAuthorize - Logger was injected</div>");
             var result = base.AuthorizeCore(httpContext);
             return result;
         }
