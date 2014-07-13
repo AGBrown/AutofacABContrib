@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using Remember.Service;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Remember.MvcWeb.Models;
 
 namespace Remember.MvcWeb
 {
@@ -58,7 +61,22 @@ namespace Remember.MvcWeb
             builder.RegisterType<Remember.Web.Service.FakeLogger>()
                 .As<Remember.Web.Service.ILogger>()
                 .InstancePerRequest();
-            builder.RegisterType<CaptchaService>().As<ICaptchaService>();
+
+            builder.RegisterType<Remember.Service.CaptchaService>()
+                   .As<Remember.Service.ICaptchaService>();
+
+            builder.RegisterType<UserStore<MvcWeb.Models.ApplicationUser>>()
+                   .As<IUserStore<MvcWeb.Models.ApplicationUser>>()
+                   .InstancePerRequest();
+
+            builder.RegisterType<MvcWeb.ApplicationUserManager>()
+                   .As<MvcWeb.ApplicationUserManager>()
+                   .InstancePerRequest();
+
+            //  note that UserStore<> takes a DbContext, not an ApplicationDbContext
+            builder.RegisterType<MvcWeb.Models.ApplicationDbContext>()
+                   .As<DbContext, ApplicationDbContext>()
+                   .InstancePerRequest();
         }
     }
 }

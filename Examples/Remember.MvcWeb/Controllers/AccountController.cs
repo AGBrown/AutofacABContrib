@@ -14,7 +14,7 @@ namespace Remember.MvcWeb.Controllers
     [CustomAuthorize]
     public class AccountController : Controller
     {
-        private ApplicationUserManager _userManager;
+        private ApplicationUserManager UserManager { get; set; }
 
         public AccountController()
         {
@@ -23,17 +23,6 @@ namespace Remember.MvcWeb.Controllers
         public AccountController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
-        }
-
-        public ApplicationUserManager UserManager {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
         }
 
         //
