@@ -16,35 +16,7 @@ namespace Remember.MvcWeb
     {
         protected void Application_Start()
         {
-            var builder = new ContainerBuilder();
-
-            builder.RegisterType<Remember.Web.Service.FakeLogger>()
-                   .As<Remember.Web.Service.ILogger>()
-                   .InstancePerRequest();
-            builder.RegisterType<CaptchaService>().As<ICaptchaService>();
-
-            builder.RegisterModelBinders(Assembly.GetExecutingAssembly());
-            builder.RegisterModelBinderProvider();
-            builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterModule<AutofacWebTypesModule>();
-            builder.RegisterFilterProvider();
-
-            //builder.RegisterModule<NHibernateModule>();
-
-            // Change controller action parameter injection by changing web.config.
-            builder.RegisterType<ExtensibleActionInvoker>().As<IActionInvoker>().InstancePerRequest();
-
-            // MVC integration test items
-            //builder.RegisterType<InvokerDependency>().As<IInvokerDependency>();
-
-            // DomainServices
-            //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).AssignableTo<DomainService>();
-            //builder.RegisterModule<AutofacDomainServiceModule>();
-
-            IContainer container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-            //DomainService.Factory = new AutofacDomainServiceFactory(new MvcContainerProvider());
-
+            IoCConfig.RegisterDependencies();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

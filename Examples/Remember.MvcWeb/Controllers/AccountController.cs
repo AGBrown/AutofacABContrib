@@ -14,7 +14,7 @@ namespace Remember.MvcWeb.Controllers
     [CustomAuthorize]
     public class AccountController : Controller
     {
-        private ApplicationUserManager _userManager;
+        private ApplicationUserManager UserManager { get; set; }
 
         public AccountController()
         {
@@ -25,21 +25,10 @@ namespace Remember.MvcWeb.Controllers
             UserManager = userManager;
         }
 
-        public ApplicationUserManager UserManager {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string returnUrl, ILogger logger)
         {
             ViewBag.ReturnUrl = returnUrl;
             var model = new LoginViewModel
@@ -47,6 +36,11 @@ namespace Remember.MvcWeb.Controllers
                 Email = "test@test.com",
                 Password = "Test123?"
             };
+            if(logger == null)
+                ModelState.AddModelError("", "Error: logger was NOT injected by action invoker");
+            else
+                ViewBag.Message = "<span style='color:green;'>Success: logger was injected by action invoker</span>";
+
             return View(model);
         }
 

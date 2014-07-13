@@ -19,8 +19,10 @@ namespace Remember.Web.Service
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             //  this will fail if the Logger is null (i.e. property injection fails)
-            Logger.Log("AuthorizeCore");
-            httpContext.Response.Write("<div style='color:black;background-color:orange;z-index:1000;height:50px;padding-top:20px;'>CustomAuthorize - Logger was injected</div>");
+            var msg = "<div style='color:black;background-color:{0};z-index:1000;height:50px;padding-top:20px;'>CustomAuthorize - Logger was {1}injected</div>";
+            msg = String.Format(msg, Logger == null ? "red" : "green", Logger == null ? "not " : "");
+            httpContext.Response.Write(msg);
+
             var result = base.AuthorizeCore(httpContext);
             return result;
         }
