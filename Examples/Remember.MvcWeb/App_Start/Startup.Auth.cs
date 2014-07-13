@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Autofac;
+using Autofac.Integration.Owin;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -16,9 +18,30 @@ namespace Remember.MvcWeb
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Configure the db context and user manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            var container = IoCConfig.RegisterDependencies();
+
+            // IMPORTANT! This should be the first middleware added to the IAppBuilder.
+            app.UseAutofacMiddleware(container);
+
+            //  Configure the db context and user manager to use a single instance per request
+            //      Note: this is now done through Autofac, and the boilerplate code is therefore altered as follows:
+
+            //  1. This is not required if you inject ApplicationDbContext through Autofac in controllers instead of doing
+            //      HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            //app.CreatePerOwinContext(ApplicationDbContext.Create);
+            
+            //  2. This is required due to the internals of some of the Mvc Owin security methods, but 
+            //      we modify to inject from the autofac lifetime instead
+            //  Old: app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>((options, context) =>
+            {
+                //  Split this out for clarity and debugging, but could be a simple lambda
+                var lts = context.GetAutofacLifetimeScope();
+                var aum = lts.Resolve<ApplicationUserManager>();
+                return aum;
+            });
+
+            app.UseAutofacMvc();
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
