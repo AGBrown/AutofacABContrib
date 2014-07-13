@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Remember.MvcWeb.Models;
@@ -40,7 +42,12 @@ namespace Remember.MvcWeb.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            var model = new LoginViewModel
+            {
+                Email = "test@test.com",
+                Password = "Test123?"
+            };
+            return View(model);
         }
 
         //
@@ -50,22 +57,65 @@ namespace Remember.MvcWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            //  Set up the test user if it does not exist
+            var user = await UserManager.FindByNameAsync("test@test.com");
+            if (user == null)
+            {
+                user = new ApplicationUser {
+                    Email = "test@test.com",
+                    UserName = "test@test.com"
+                };
+                var createResult = await UserManager.CreateAsync(user, "Test123?");
+                if (!createResult.Succeeded)
+                {
+                    var message = "could not set up test user for sample application";
+                    foreach (var error in createResult.Errors)
+                    {
+                        message += "\r\n" + error;
+                    }
+                    throw new ApplicationException(message);
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.Email, model.Password);
+                //  This simple sample uses the built in System.Web.Security.FormsAuthentication 
+                //      rather than simplemembership or Identity
+                //  Sample page flow:
+                //      - Account/LoginSuccess (which is protected by CustomAuthorize)
+                //          - CustomAuthorize takes an injected ILogger (see global.asax.cs)
+                //      - redirects to Account/Login
+                //      - On submission to this action
+                //          - The model binder will only validate the form if the "captcha" is correct
+                //          - we then only call SetAuthCookie if the email and password are correct
+                //      - And finally we redirect to LoginSuccess
+
+                user = await UserManager.FindAsync(model.Email, model.Password);
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+
+                    var redirectUrl = Request.QueryString["ReturnUrl"];
+                    if (String.IsNullOrEmpty(redirectUrl))
+                        return RedirectToAction("LoginSuccess");
+                    else
+                        return Redirect(redirectUrl);
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Invalid credentials (so says the Login action)");
                 }
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //
+        // GET: /Account/Login
+        public ActionResult LoginSuccess()
+        {
+            return View();
         }
 
         //
