@@ -16,7 +16,7 @@ namespace Remember.MvcWeb
     {
         protected void Application_Start()
         {
-            IoCConfig.RegisterDependencies();
+            //IoCConfig.RegisterDependencies();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
