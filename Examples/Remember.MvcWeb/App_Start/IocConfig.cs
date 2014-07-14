@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Autofac;
+using Autofac.Core;
 using Autofac.Integration.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -29,10 +30,16 @@ namespace Remember.MvcWeb
 
             IContainer container = builder.Build();
             
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             //DomainService.Factory = new AutofacDomainServiceFactory(new MvcContainerProvider());
 
             return container;
+        }
+
+        public static AutofacDependencyResolver SetMvcDependencyResolver(IContainer rootContainer)
+        {
+            var dependencyResolver = new AutofacDependencyResolver(rootContainer);
+            DependencyResolver.SetResolver(dependencyResolver);
+            return dependencyResolver;
         }
 
         static void RegisterStandardMvcSetup(ContainerBuilder builder)
@@ -41,11 +48,13 @@ namespace Remember.MvcWeb
             builder.RegisterModelBinderProvider();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterModule<AutofacWebTypesModule>();
+            //  Remove this to remove #553
             builder.RegisterFilterProvider();
 
             //builder.RegisterModule<NHibernateModule>();
 
             // Change controller action parameter injection by changing web.config.
+            //  Remove this to remove #544 (and update the Login action to remove the injected ILogger)
             builder.RegisterType<ExtensibleActionInvoker>()
                    .As<IActionInvoker>()
                    .InstancePerRequest();

@@ -16,7 +16,9 @@ namespace Remember.MvcWeb
     {
         protected void Application_Start()
         {
-            //IoCConfig.RegisterDependencies();
+            //var container = IoCConfig.RegisterDependencies();
+            ////  Now register the dependency resolver with mvc
+            //var dependencyResolver = IoCConfig.SetMvcDependencyResolver(container);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
