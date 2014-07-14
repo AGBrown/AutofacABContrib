@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Autofac.Core.Registration;
 using Autofac.Core.Resolving;
 using Autofac.Util;
@@ -36,9 +37,12 @@ namespace Autofac.Core.Lifetime
     /// <summary>
     /// Lifetime scope implementation.
     /// </summary>
-    [DebuggerDisplay("Tag = {Tag}, IsDisposed = {IsDisposed}")]
+    [DebuggerDisplay("Id = {_id}: Tag = {Tag}, IsDisposed = {IsDisposed}")]
     public class LifetimeScope : Disposable, ISharingLifetimeScope, IServiceProvider
     {
+        static int lastId = 0;
+        readonly int _id = Interlocked.Increment(ref lastId);
+
         /// <summary>
         /// Protects shared instances from concurrent access. Other members and the base class are threadsafe.
         /// </summary>
