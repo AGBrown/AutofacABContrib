@@ -22,6 +22,8 @@ namespace Remember.MvcWeb
             var container = IoCConfig.RegisterDependencies();
             //  Now register the dependency resolver with mvc
             var dependencyResolver = IoCConfig.SetMvcDependencyResolver(container);
+            //  and with owin for mvc
+            dependencyResolver.RegisterOwinMvcDependencyResolver(container);
 
             // IMPORTANT! This should be the first middleware added to the IAppBuilder.
             app.UseAutofacMiddleware(container);
