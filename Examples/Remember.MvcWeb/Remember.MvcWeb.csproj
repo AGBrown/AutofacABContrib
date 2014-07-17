@@ -43,6 +43,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.Mvc5.3.3.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.Mvc5.Owin.3.0.1\lib\net45\Autofac.Integration.Mvc.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.Owin.3.0.1\lib\net45\Autofac.Integration.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -247,22 +262,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Source\Autofac.Integration.Mvc.Owin\Autofac.Integration.Mvc.Owin.csproj">
-      <Project>{80e903a8-7a29-4b17-b67e-9a769894f415}</Project>
-      <Name>Autofac.Integration.Mvc.Owin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Source\Autofac.Integration.Mvc\Autofac.Integration.Mvc.csproj">
-      <Project>{dd874e64-c7ec-464d-925f-cf4a709edeef}</Project>
-      <Name>Autofac.Integration.Mvc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Source\Autofac.Integration.Owin\Autofac.Integration.Owin.csproj">
-      <Project>{726d9f07-4e72-4b6c-8a38-f2ae56f91616}</Project>
-      <Name>Autofac.Integration.Owin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Source\Autofac\Autofac.csproj">
-      <Project>{7d018b3e-34a3-423d-ac35-12731f4e0a2c}</Project>
-      <Name>Autofac</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Remember.Service\Remember.Service.csproj">
       <Project>{c02a73fd-8f99-4127-878f-01f929c67bad}</Project>
       <Name>Remember.Service</Name>

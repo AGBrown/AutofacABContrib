@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Integration.Mvc.Owin;
 using Autofac.Integration.Owin;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -21,9 +20,7 @@ namespace Remember.MvcWeb
         {
             var container = IoCConfig.RegisterDependencies();
             //  Now register the dependency resolver with mvc
-            var dependencyResolver = IoCConfig.SetMvcDependencyResolver(container);
-            //  and with owin for mvc
-            dependencyResolver.RegisterOwinMvcDependencyResolver(container);
+            IoCConfig.SetMvcDependencyResolver(container);
 
             // IMPORTANT! This should be the first middleware added to the IAppBuilder.
             app.UseAutofacMiddleware(container);

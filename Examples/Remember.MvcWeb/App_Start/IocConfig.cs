@@ -35,11 +35,10 @@ namespace Remember.MvcWeb
             return container;
         }
 
-        public static AutofacDependencyResolver SetMvcDependencyResolver(IContainer rootContainer)
+        public static void SetMvcDependencyResolver(IContainer rootContainer)
         {
             var dependencyResolver = new AutofacDependencyResolver(rootContainer);
             DependencyResolver.SetResolver(dependencyResolver);
-            return dependencyResolver;
         }
 
         static void RegisterStandardMvcSetup(ContainerBuilder builder)
